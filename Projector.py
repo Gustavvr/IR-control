@@ -21,7 +21,7 @@ class Projector(object):
         self.port = serial.Serial(self._serial_port, self._baudrate,
                                    timeout=self._timeout)
         self.sio = io.TextIOWrapper(io.BufferedRWPair(self.port,self.port),
-                       newline='\n')
+                       newline=None)
 # https://www.infocus.com/resources/documents/Reference-Documents/InFocus-IN5310HD-RS232-Commands.pdf
     def __del__(self):
         self.port.close()
