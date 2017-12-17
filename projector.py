@@ -32,7 +32,7 @@ class Projector(object):
         state = self.sio.readline()
         state = state[11]
         return int(state)
-        
+  
     def power_on(self):
         self.sio.write(unicode('(PWR1)'))
         self.sio.flush()
@@ -49,7 +49,7 @@ def main():
     parser.add_argument("-b", "--baudrate", type=int, default=19200, help="Defaults to 19200")
     parser.add_argument("-q", "--quiet", action="store_true", help="Quiet")
     parser.add_argument("-t", "--timeout", type=int, default=0.5, help="Defaults to 0.5")
-    parser.add_argument("state", choices=["on", "off"])
+    parser.add_argument("state", choices=["on", "off", "status"], nargs='?', default="status") 
     args = parser.parse_args()
 
     projector = Projector(args.port, args.baudrate, args.timeout)
@@ -58,6 +58,7 @@ def main():
       projector.power_on()
     if args.state == "off":
       projector.power_off()
+
     state = projector.power_state()
     if state == 1:
       if not args.quiet:
@@ -71,9 +72,9 @@ def main():
       if not args.quiet:
         print "error"
       sys.exit(2)
-
+    
 
 
 if __name__ == '__main__':
     DEBUG = True
-    main()      
+    main()
